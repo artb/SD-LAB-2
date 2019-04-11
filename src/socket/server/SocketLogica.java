@@ -68,7 +68,7 @@ public class SocketLogica {
                 int id = Integer.valueOf(nome);
                 String str = moedas.get(id);
                 String[] splitStr = str.split("\\s+");
-                String novaCotacao = splitStr[1] + " cotado em: R$ " + Double.toString(cotacao);
+                String novaCotacao = splitStr[0] + " cotado em: R$ " + Double.toString(cotacao);
                 moedas.set(id,novaCotacao);
                 String unicaMoeda = "";
                 for (int i = 0; i < moedas.size(); i++) {
