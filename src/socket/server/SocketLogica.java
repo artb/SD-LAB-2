@@ -41,9 +41,6 @@ public class SocketLogica {
 
     }
 
-    public void mostraMoeda() throws IOException{
-        DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-    }
 
     public void moeda(Vector<String> moedas) throws IOException{
         DataInputStream in = new DataInputStream(socket.getInputStream());
@@ -76,7 +73,29 @@ public class SocketLogica {
 
     }
 
-    public void editaMoeda(Vector<String> moedas)throws IOException{
+    public void editaMoeda(Vector<String> moedas) throws IOException {
+        DataInputStream in = new DataInputStream(socket.getInputStream());
+        DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+        try {
+            double cotacao = in.readDouble();
+            int id = in.readInt();
+            if (cotacao <= 0) {
+                System.out.println("Erro 501 - Invalid Number");
+                out.writeUTF("Moeda com valor negativo. Refazer operacao");
+            } else {
+                String str = moedas.get(id);
+                String[] splitStr = str.split("\\s+");
+                String novaCotacao = splitStr[1] + " cotado em: R$ " + Double.toString(cotacao);
+                moedas.set(id,novaCotacao);
 
+            }
+
+        } catch (Exception e) {
+            out.writeDouble(-1);
+            System.out.println("Erro 500 - Unexpected");
+        }
+        in.close();
+        out.close();
+        socket.close();
     }
 }

@@ -24,6 +24,18 @@ public class ClientInterface extends JFrame{
         JButton janelaEditar = new JButton("Editar");
         final JTextArea area = new JTextArea(30, 30);
 
+        //Janela de edicao
+        JFrame frame2 = new JFrame("Editar Moeda");
+        Container panelEdit = frame2.getContentPane();
+        JLabel num = new JLabel("Insira o numero da moeda: ");
+        //PASSAR ESSE ID PRA EDITAR O VALOR DENTRO DO VECTOR
+        final JTextField inputID = new JTextField(5);
+        JLabel newVal = new JLabel("Insira o novo valor da Moeda: ");
+        final JTextField inputNCotacao = new JTextField(5);
+        JButton editarJanelaEditar = new JButton("Editar Moeda");
+        JButton apagar = new JButton("Apagar Moeda");
+        //-----------
+
         panel.setLayout(new FlowLayout());
         panel.add(q0_label);
         panel.add(inputNome);
@@ -56,17 +68,6 @@ public class ClientInterface extends JFrame{
         //AQUI EU VOU FAZER O BOTAO DE EDITAR QUE VAI ABRIR UMA NOVA JANELA PRA EDITAR UMA MOEDA
         janelaEditar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JFrame frame2 = new JFrame("Editar Moeda");
-                Container panelEdit = frame2.getContentPane();
-                JLabel num = new JLabel("Insira o numero da moeda: ");
-                //PASSAR ESSE ID PRA EDITAR O VALOR DENTRO DO VECTOR
-                final JTextField inputID = new JTextField(5);
-                JLabel newVal = new JLabel("Insira o novo valor da Moeda: ");
-                final JTextField inputNCotacao = new JTextField(5);
-                JButton editarJanelaEditar = new JButton("Editar Moeda");
-                JButton apagar = new JButton("Apagar Moeda");
-
-
 
                 panelEdit.setLayout(new BoxLayout(panelEdit,BoxLayout.Y_AXIS));
                 panelEdit.add(num);
@@ -87,7 +88,29 @@ public class ClientInterface extends JFrame{
                 frame2.toFront();
 
             }
+
         });
+        editarJanelaEditar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    String s1 = inputID.getText();
+                    String s2 = newVal.getText();
+                    int id = Integer.valueOf(s1);
+                    double cotacao = Double.valueOf(s2);
+                    new ClientSocket().EditaMoeda(id,cotacao);
+                    System.out.println("eu editei a moeda");
+                    frame2.setVisible(false);
+
+
+                }catch (NumberFormatException e1) {
+                    e1.printStackTrace();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+
+            }
+        });
+
 
     }
 

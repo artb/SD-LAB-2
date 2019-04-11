@@ -53,4 +53,17 @@ public class ClientSocket {
         return resultado;
 
     }
+
+    public void EditaMoeda(int id, double cotacao) throws IOException{
+        Socket socket = new Socket("localhost", 4444);
+        DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+        DataInputStream in = new DataInputStream(socket.getInputStream());
+
+        out.writeInt(id);
+        out.writeDouble(cotacao);
+
+        in.close();
+        out.close();
+        socket.close();
+    }
 }
