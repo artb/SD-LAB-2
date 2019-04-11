@@ -48,14 +48,40 @@ public class SocketLogica {
         try{
             double cotacao = in.readDouble();
             String nome = in.readUTF();
-            if(cotacao <=0){
-                System.out.println("Erro 501 - Invalid Number");
-                out.writeUTF("Moeda com valor negativo. Refazer operacao");
-            }else {
-                String resultado = nome + " cotado em: R$ " + Double.toString(cotacao);
-                moedas.add(resultado);
+            int operacao = in.readInt();
+
+            if(operacao == 0) {
+                if (cotacao <= 0) {
+                    System.out.println("Erro 501 - Invalid Number");
+                    out.writeUTF("Moeda com valor negativo. Refazer operacao");
+                } else {
+                    String resultado = nome + " cotado em: R$ " + Double.toString(cotacao);
+                    moedas.add(resultado);
+                    String unicaMoeda = "";
+                    for (int i = 0; i < moedas.size(); i++) {
+                        unicaMoeda = unicaMoeda + "\n" + moedas.get(i);
+
+                    }
+                    out.writeUTF(unicaMoeda);
+                }
+            }else if(operacao == 1){
+                int id = Integer.valueOf(nome);
+                String str = moedas.get(id);
+                String[] splitStr = str.split("\\s+");
+                String novaCotacao = splitStr[1] + " cotado em: R$ " + Double.toString(cotacao);
+                moedas.set(id,novaCotacao);
                 String unicaMoeda = "";
-                for(int i=0;i < moedas.size();i++){
+                for (int i = 0; i < moedas.size(); i++) {
+                    unicaMoeda = unicaMoeda + "\n" + moedas.get(i);
+
+                }
+                out.writeUTF(unicaMoeda);
+
+            }else if(operacao == 2){
+                int id = Integer.valueOf(nome);
+                moedas.remove(id);
+                String unicaMoeda = "";
+                for (int i = 0; i < moedas.size(); i++) {
                     unicaMoeda = unicaMoeda + "\n" + moedas.get(i);
 
                 }

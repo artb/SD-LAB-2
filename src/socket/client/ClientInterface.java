@@ -51,9 +51,10 @@ public class ClientInterface extends JFrame{
                     String s1 = inputNome.getText();
                     String s2 = inputCotacao.getText();
                     double cotacao = Double.valueOf(s2);
+                    int operacao = 0;
 
 
-                    String moeda = new ClientSocket().CriaMoedaSemClasse(cotacao,s1);
+                    String moeda = new ClientSocket().CriaMoedaSemClasse(cotacao,s1,operacao);
                     System.out.println(moeda);
                     String texto = moeda;
                     area.setText(texto);
@@ -94,10 +95,14 @@ public class ClientInterface extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 try{
                     String s1 = inputID.getText();
-                    String s2 = newVal.getText();
-                    int id = Integer.valueOf(s1);
+                    String s2 = inputNCotacao.getText();
                     double cotacao = Double.valueOf(s2);
-                    new ClientSocket().EditaMoeda(id,cotacao);
+                    int operacao = 1;
+
+                    String moeda = new ClientSocket().CriaMoedaSemClasse(cotacao,s1,operacao);
+                    System.out.println(moeda);
+                    String texto = moeda;
+                    area.setText(texto);
                     System.out.println("eu editei a moeda");
                     frame2.setVisible(false);
 
@@ -107,6 +112,31 @@ public class ClientInterface extends JFrame{
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
+
+            }
+        });
+        apagar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    String s1 = inputID.getText();
+                    String s2 = inputNCotacao.getText();
+                    double cotacao = Double.valueOf(s2);
+                    int operacao = 2;
+
+                    String moeda = new ClientSocket().CriaMoedaSemClasse(cotacao,s1,operacao);
+                    System.out.println(moeda);
+                    String texto = moeda;
+                    area.setText(texto);
+                    System.out.println("eu apaguei a moeda");
+                    frame2.setVisible(false);
+
+
+                }catch (NumberFormatException e1) {
+                    e1.printStackTrace();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+
 
             }
         });

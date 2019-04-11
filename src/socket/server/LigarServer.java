@@ -14,8 +14,7 @@ public class LigarServer {
             Socket socket = serverSocket.accept();
 
             new SocketLogica(socket).moeda(moedas);
-            System.out.println("Estou ligado");
-            //new SocketLogica(socket).editaMoeda(moedas);
+
 
         }
     }

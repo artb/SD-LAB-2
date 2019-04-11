@@ -37,13 +37,14 @@ public class ClientSocket {
 
     }
 
-    public String CriaMoedaSemClasse(double cotacao, String nome) throws IOException{
+    public String CriaMoedaSemClasse(double cotacao, String nome, int operacao) throws IOException{
         Socket socket = new Socket("localhost", 4444);
         DataOutputStream out = new DataOutputStream(socket.getOutputStream());
         DataInputStream in = new DataInputStream(socket.getInputStream());
 
         out.writeDouble(cotacao);
         out.writeUTF(nome);
+        out.writeInt(operacao);
         String resultado = in.readUTF();
 
         in.close();
